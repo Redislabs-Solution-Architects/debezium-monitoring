@@ -1,5 +1,5 @@
 # JMX Monitoring for Debezium Server
-The connectors in Debezium Server provide JMX metrics that can be used for monitoring with a suitable tool, for example [JConsole](https://docs.oracle.com/javase/6/docs/technotes/guides/management/jconsole.html) or [Grafana](https://grafana.com/). See section Monitoring in the Debezium documentation for the various connectors, for example here for MySQL. This guide describes the steps required for setting up monitoring for Debezium Server.
+The connectors in Debezium Server provide JMX metrics that can be used for monitoring with a suitable tool, for example [JConsole](https://docs.oracle.com/javase/6/docs/technotes/guides/management/jconsole.html) or [Grafana](https://grafana.com/). See section Monitoring in the Debezium documentation for the various connectors, for example [here](https://debezium.io/documentation/reference/stable/connectors/mysql.html#mysql-monitoring) for MySQL. This guide describes the steps required for setting up monitoring for Debezium Server.
 
 ## Java Options
 
@@ -133,14 +133,21 @@ Restart Prometheus and verify the target for Debezium is available (*http://loca
 
 ### Grafana
 
-Download the monitoring dashboard for the Debezium MySQL connector from [here](https://grafana.com/grafana/dashboards/11523-mysql-connector/), import the JSON file into Grafana and connect the dashboard to your Prometheus data source.
+Currrently, there are two sample Grafana dashboards available, one for MySQL and the other for Oracle. These are based on the dashboard for MySQL available in the [Debezium Examples](https://github.com/debezium/debezium-examples/tree/main/monitoring/debezium-grafana) repository. Note that this is a bit outdated and will not work well with the current version of Grafana (9.3.6 as of April 2023).
 
-You can switch between the *streaming* and *snapshot* contexts in the context drop-down menu:
+Download the monitoring dashboard for the Debezium MySQL or Oracle connector from this repository, import the JSON file into Grafana and connect the dashboard to your Prometheus data source.
 
-![image](https://user-images.githubusercontent.com/116373419/231175443-b390c359-55d4-48b1-8740-d2bc2bf5646d.png)
+Each dashboard has three sections:
 
-![image](https://user-images.githubusercontent.com/116373419/231175512-25868fc0-b896-4b34-bebc-e22cbd232527.png)
+<ins>Streaming</ins>
 
-> The dashboard uses an incorrect setting for calculating the values for some of the panels. This can be seen in the screenshot for the streaming context above, where *Total NumberOf EventsSeen* has a value of 33.4, which clearly makes no sense. To correct, edit the panel and change the setting of *Calculation* in section Value options from ‘Mean’ to ‘Last *’ (last non-null value), as shown in the screenshot below.
+<img width="1508" alt="Grafana dashboard streaming section" src="https://user-images.githubusercontent.com/116373419/231205296-fc6d824e-3d22-4dff-bf0a-cc1c446a881a.png">
 
-![image](https://user-images.githubusercontent.com/116373419/231175781-0e5318e6-5adf-4382-b425-4c0926d1274a.png)
+<ins>Snapshot</ins>
+
+<img width="1506" alt="Grafana dashboard snapshot section" src="https://user-images.githubusercontent.com/116373419/231205567-5ca5fd51-4286-4cc4-ba42-8223d8296ccd.png">
+
+<ins>Schema History</ins>
+
+<img width="1511" alt="Grafana dashboard schema history section" src="https://user-images.githubusercontent.com/116373419/231204934-e1d8e6d1-32bb-49c6-b1ee-2e7a63c39cc9.png">
+
