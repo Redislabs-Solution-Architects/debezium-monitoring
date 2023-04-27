@@ -50,6 +50,8 @@ Once Debezium Server is running, connect to the JVM through JConsole. In this ex
 The available MBeans will depend on the connector you are using with Debezium Server. The screenshot above shows the three MBeans for MySQL, but some connectors (for example PostgreSQL) only have two MBeans for snapshot and streaming.
 
 ## Monitoring through Grafana
+> **Warning**
+> In this scenario, Grafana uses Prometheus as a data source. As Prometheus only supports numeric and boolean data, JMX attributes with a String or String array data type will not be exposed. To view these attributes, use JConsole or another JMX client, instead.
 
 If you want to monitor through Grafana, three additional components are needed:
 
